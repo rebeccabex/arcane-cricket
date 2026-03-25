@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { apiCall } from './api';
 import './App.css'
 
 const App = () => {
+  const [loadMessage, setLoadMessage] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
-      await apiCall();
+      const response = await apiCall();
+      setLoadMessage(response.data);
     }
     
     fetchData();
