@@ -1,8 +1,12 @@
 import express from 'express';
 
+const cors = require('cors');
 const app = express();
+app.use(cors());
 
-console.log(app);
+app.get('/', (req, res) => {
+      res.send('Default response from Arcane Cricket League server!')
+})
 
 app.listen(8080, () => {
       console.log('Server listening on port 8080')

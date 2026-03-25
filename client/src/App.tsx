@@ -1,13 +1,26 @@
+import React, { useEffect } from 'react';
+import { apiCall } from './api';
 import './App.css'
 
 const App = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      await apiCall();
+    }
+    
+    fetchData();
+  }, [])
+
   return (
     <>
       <section id="center">
         <div>
-          <h1>Welcome to Arcane Cricket</h1>
+          <h1>Welcome to Arcane Cricket League</h1>
           <p>
-            A game where cricket meets magic
+            Where Cricket meets Magic!
+          </p>
+          <p>
+            {loadMessage}
           </p>
         </div>
       </section>
