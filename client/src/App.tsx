@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiCall } from './api';
 import './App.css';
 import styled from 'styled-components';
 import { MainMenu } from './pages/MainMenu';
+import { SingleMatchMenu } from './pages/SingleMatchMenu';
+import { Page } from './types';
 
 const App = () => {
   const [loadMessage, setLoadMessage] = useState('');
+  const [pageToDisplay, setPageToDisplay] = useState<Page>('MainMenu');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,11 +19,24 @@ const App = () => {
     fetchData();
   }, []);
 
+  const selectPage = (page: Page) => setPageToDisplay(page);
+  const goToMainMenu = () => setPageToDisplay('MainMenu');
+
+  const getPageToDisplay = () => {
+    switch (pageToDisplay) {
+      case 'MainMenu':
+        return <MainMenu selectPage={selectPage} />;
+      case 'SingleMatchMenu':
+        return <SingleMatchMenu returnToMainMenu={goToMainMenu} />;
+      case 'CampaignMenu':
+      case 'OptionsMenu':
+        return <></>;
+    }
+  };
+
   return (
     <>
-      <MainPage>
-        <MainMenu />
-      </MainPage>
+      <MainPage>{getPageToDisplay()}</MainPage>
     </>
   );
 };
