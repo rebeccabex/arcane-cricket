@@ -1,9 +1,12 @@
-export type Page = Menus | MatchScreens;
+export type Page = Menu | MatchScreen;
 
-export type Menus =
-  | 'MainMenu'
-  | 'SingleMatchMenu'
-  | 'CampaignMenu'
-  | 'OptionsMenu';
+const menus = ['MainMenu', 'SingleMatchMenu', 'CampaignMenu', 'OptionsMenu'];
 
-export type MatchScreens = 'TeamDraft';
+export type Menu = (typeof menus)[number];
+
+const matchScreens = ['TeamDraft'];
+export type MatchScreen = (typeof matchScreens)[number];
+
+const pages = menus.concat(matchScreens);
+
+export const isPage = (x: any): x is Page => pages.includes(x);

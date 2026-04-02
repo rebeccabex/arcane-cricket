@@ -1,0 +1,10 @@
+{
+  "player_names": {
+    "forenames": {
+      "male": ["Tom", "William", "Henry"],
+      "female": ["Elizabeth", "Mary", "Matilda"],
+      "neutral": ["Kay"]
+    },
+    "surnames": ["Smith", "Jones", "Thompson", "Taylor", "Wright"]
+  }
+}
