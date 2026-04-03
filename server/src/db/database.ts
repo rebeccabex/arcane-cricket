@@ -15,7 +15,7 @@ database.exec(`
     name TEXT NOT NULL,
     category_id INTEGER NOT NULL,
     level INTEGER NOT NULL,
-    FOREIGN_KEY (category_id)
+    FOREIGN KEY (category_id)
       REFERENCES categories (id)
   );
 
@@ -30,7 +30,7 @@ database.exec(`
     name TEXT NOT NULL,
     is_user_created INTEGER,
     current_league_id INT NOT NULL,
-    FOREIGN_KEY (current_league_id)
+    FOREIGN KEY (current_league_id)
       REFERENCES leagues (id)
   );
 
@@ -41,7 +41,9 @@ database.exec(`
     gender TEXT NOT NULL,
     team_id INTEGER NOT NULL,
     class_id INTEGER NOT NULL,
-    experience_pts INTEGER NOT NULL DEFAULT 0,
+    experience_points INTEGER NOT NULL DEFAULT 0,
+    total_hit_points INTEGER NOT NULL,
+    current_hit_points INTEGER NOT NULL,
     abilities TEXT NOT NULL,
     power_die INTEGER NOT NULL DEFAULT 4,
     speed_die INTEGER NOT NULL DEFAULT 4,
@@ -55,9 +57,9 @@ database.exec(`
     perception_bonus INTEGER NOT NULL DEFAULT 0,
     constitution_bonus INTEGER NOT NULL DEFAULT 0,
     leadership_bonus INTEGER NOT NULL DEFAULT 0,
-    FOREIGN_KEY (team_id)
+    FOREIGN KEY (team_id)
       REFERENCES teams (id),
-    FOREIGN_KEY (class_id)
+    FOREIGN KEY (class_id)
       REFERENCES classes (id)
   );
 
@@ -67,7 +69,7 @@ database.exec(`
     description TEXT NOT NULL
   );
 
-  CREATE TABLE IF NOT EXISTS player-abilities(
+  CREATE TABLE IF NOT EXISTS player_abilities(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     player_id INTEGER NOT NULL,
     ability_id INTEGER NOT NULL,

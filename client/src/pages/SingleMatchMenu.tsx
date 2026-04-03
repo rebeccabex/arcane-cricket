@@ -10,9 +10,10 @@ import {
 
 type Props = {
   returnToMainMenu: () => void;
+  startMatch: () => void;
 };
 
-export const SingleMatchMenu = ({ returnToMainMenu }: Props) => {
+export const SingleMatchMenu = ({ returnToMainMenu, startMatch }: Props) => {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<DifficultyLevel>('Medium');
   const [selectedTier, setSelectedTier] = useState<AbilityTier>('Village');
@@ -49,7 +50,7 @@ export const SingleMatchMenu = ({ returnToMainMenu }: Props) => {
       </MenuList>
 
       <button onClick={returnToMainMenu}>Back</button>
-      <button onClick={returnToMainMenu}>Start</button>
+      <button onClick={startMatch}>Start</button>
     </>
   );
 };

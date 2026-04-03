@@ -1,33 +1,35 @@
-import { useEffect, useState } from 'react';
-import { apiCall } from './api';
-import './App.css';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { MainMenu } from './pages/MainMenu';
 import { SingleMatchMenu } from './pages/SingleMatchMenu';
-import { Page } from './types';
+import { isPage, Page } from './types';
+import useLocalStorage from './hooks';
 
 const App = () => {
-  const [loadMessage, setLoadMessage] = useState('');
-  const [pageToDisplay, setPageToDisplay] = useState<Page>('MainMenu');
+  const [currentPage, setCurrentPage] = useLocalStorage<Page>(
+    'currentPage',
+    'MainMenu',
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await apiCall();
-      setLoadMessage(response.data);
-    };
+  const updateCurrentPage = (page: Page) => {
+    setCurrentPage(page);
+  };
 
-    fetchData();
-  }, []);
-
-  const selectPage = (page: Page) => setPageToDisplay(page);
-  const goToMainMenu = () => setPageToDisplay('MainMenu');
+  const selectPage = (page: Page) => updateCurrentPage(page);
+  const goToMainMenu = () => updateCurrentPage('MainMenu');
+  const startMatch = () => updateCurrentPage('TeamDraft');
 
   const getPageToDisplay = () => {
-    switch (pageToDisplay) {
+    switch (currentPage) {
       case 'MainMenu':
         return <MainMenu selectPage={selectPage} />;
       case 'SingleMatchMenu':
-        return <SingleMatchMenu returnToMainMenu={goToMainMenu} />;
+        return (
+          <SingleMatchMenu
+            returnToMainMenu={goToMainMenu}
+            startMatch={startMatch}
+          />
+        );
       case 'CampaignMenu':
       case 'OptionsMenu':
         return <></>;

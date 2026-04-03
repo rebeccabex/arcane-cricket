@@ -19,7 +19,7 @@ const jsonParser = bodyParser.json();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const names_filename = 'resources/names.json';
+const names_filename = '../resources/names.json';
 
 const names = JSON.parse(
   readFileSync(join(__dirname, names_filename), 'utf-8'),
