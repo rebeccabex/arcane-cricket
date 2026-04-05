@@ -37,9 +37,12 @@ export type Player = {
   surname: string;
   gender: Gender;
   level: number;
+  class: string;
   experiencePoints: number;
   stats: PlayerStats;
   abilityDice: PlayerAbilityDice;
+  totalHitPoints: number;
+  currentHitPoints: number;
 };
 
 export type namesFile = {

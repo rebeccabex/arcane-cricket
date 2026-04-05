@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { MainMenu } from './pages/MainMenu';
-import { SingleMatchMenu } from './pages/SingleMatchMenu';
-import { isPage, Page } from './types';
-import useLocalStorage from './hooks';
+import { MainMenu } from './MainMenu';
+import { SingleMatchMenu } from './SingleMatchMenu';
+import { isPage, Page } from '../../types';
+import useLocalStorage from '../../hooks';
 
-const App = () => {
+const Menus = () => {
   const [currentPage, setCurrentPage] = useLocalStorage<Page>(
     'currentPage',
     'MainMenu',
@@ -39,6 +39,7 @@ const App = () => {
   return (
     <>
       <MainPage>{getPageToDisplay()}</MainPage>
+      <button onClick={goToMainMenu}>Home</button>
     </>
   );
 };
@@ -52,4 +53,4 @@ const MainPage = styled.section`
   flex-grow: 1;
 `;
 
-export default App;
+export default Menus;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Page } from '../types';
+import { Page } from '../../types';
 
 type Props = {
   selectPage: (page: Page) => void;

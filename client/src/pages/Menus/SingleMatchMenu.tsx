@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import MenuList from '../components/MenuList';
-import MenuListItem from '../components/MenuListItem';
+import MenuList from '../../components/MenuList.js';
+import MenuListItem from '../../components/MenuListItem.js';
 import {
   AbilityTier,
   abilityTiers,
   DifficultyLevel,
   difficultyLevels,
-} from './options';
+} from './../options.js';
 
 type Props = {
   returnToMainMenu: () => void;
