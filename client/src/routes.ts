@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router';
 import Menus from './pages/Menus/Menus.js';
-import { SingleMatchPage } from './pages/SingleMatch/SingleMatchPage.js';
+import { getPlayersForDrafting } from './api.js';
+import { TeamDraft } from './pages/SingleMatch/TeamDraft.js';
 
 export const router = createBrowserRouter([
   {
@@ -8,12 +9,9 @@ export const router = createBrowserRouter([
     Component: Menus,
     children: [
       {
-        path: 'singleMatch/',
-        Component: SingleMatchPage,
-        loader: ({ request, params }) =>
-          fetch(`/api/show/${params.showId}.json`, {
-            signal: request.signal,
-          }),
+        path: 'teamDraft',
+        Component: TeamDraft,
+        loader: getPlayersForDrafting,
       },
     ],
   },

@@ -1,23 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Player } from '../../types.js';
-import { getPlayersForDrafting } from '../../api.js';
 import styled from 'styled-components';
+import { useLoaderData } from 'react-router-dom';
+
+type LoaderData = {
+  playersForDrafting: Array<Player>;
+};
 
 export const TeamDraft = () => {
   const [team, setTeam] = useState({});
-  const [playersForDrafting, setPlayersForDrafting] = useState<Array<Player>>(
-    [],
-  );
-
-  useEffect(() => {
-    console.log('fetch players for drafting');
-    const fetchData = async () => {
-      const response = await getPlayersForDrafting();
-      setPlayersForDrafting(response.data);
-    };
-
-    fetchData();
-  }, []);
+  const { playersForDrafting } = useLoaderData() as LoaderData;
 
   return (
     <>

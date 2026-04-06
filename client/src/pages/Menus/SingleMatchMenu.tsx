@@ -7,6 +7,7 @@ import {
   DifficultyLevel,
   difficultyLevels,
 } from './../options.js';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   returnToMainMenu: () => void;
@@ -50,7 +51,9 @@ export const SingleMatchMenu = ({ returnToMainMenu, startMatch }: Props) => {
       </MenuList>
 
       <button onClick={returnToMainMenu}>Back</button>
-      <button onClick={startMatch}>Start</button>
+      <NavLink to="teamDraft" end>
+        Start Game
+      </NavLink>
     </>
   );
 };
