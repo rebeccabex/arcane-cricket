@@ -14,3 +14,8 @@ export const abilityTiers = Array<string>(
   'International',
 );
 export type AbilityTier = (typeof abilityTiers)[number];
+
+export type SingleMatchSettings = {
+  difficultyLevel: DifficultyLevel;
+  tier: AbilityTier;
+};

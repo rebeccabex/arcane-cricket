@@ -35,7 +35,6 @@ export const router = createBrowserRouter([
           {
             path: teamDraftPath,
             Component: TeamDraft,
-            loader: getPlayersForDrafting,
           },
         ],
       },

@@ -1,32 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Player } from '../../types.js';
 import styled from 'styled-components';
-import { useLoaderData } from 'react-router-dom';
-
-type LoaderData = {
-  playersForDrafting: Array<Player>;
-};
+import { useLocation } from 'react-router-dom';
+import { getPlayersForDrafting } from '../../api.js';
 
 export const TeamDraft = () => {
+  const { state } = useLocation();
   const [team, setTeam] = useState({});
-  const { playersForDrafting } = useLoaderData() as LoaderData;
+  const [playersForDrafting, setPlayersForDrafting] =
+    useState<Array<Player> | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getPlayersForDrafting(state.difficultyLevel);
+      setPlayersForDrafting(response.data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
       <Heading>Pick your team!</Heading>
       <DraftTable>
-        <tr>
-          <th>Name</th>
-          <th>Level</th>
-          <th>Class</th>
-        </tr>
-        {playersForDrafting.map((player) => (
+        <thead>
           <tr>
-            <td>{`${player.forename} ${player.surname}`}</td>
-            <td>{player.level}</td>
-            <td>{player.class}</td>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Class</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {playersForDrafting?.map((player) => (
+            <tr>
+              <td>{`${player.forename} ${player.surname}`}</td>
+              <td>{player.level}</td>
+              <td>{player.class}</td>
+            </tr>
+          ))}
+        </tbody>
       </DraftTable>
     </>
   );

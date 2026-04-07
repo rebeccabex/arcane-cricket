@@ -45,7 +45,7 @@ export type Player = {
   currentHitPoints: number;
 };
 
-export type namesFile = {
+export type NamesFile = {
   player_names: {
     forenames: {
       male: Array<string>;
