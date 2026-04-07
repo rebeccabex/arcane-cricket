@@ -8,13 +8,11 @@ import {
   difficultyLevels,
 } from './../options.js';
 import { NavLink } from 'react-router-dom';
+import { singleMatchTeamDraftRoute } from '../../routes.js';
 
-type Props = {
-  returnToMainMenu: () => void;
-  startMatch: () => void;
-};
+const unlockedTiers: Array<AbilityTier> = ['Village'];
 
-export const SingleMatchMenu = ({ returnToMainMenu, startMatch }: Props) => {
+export const SingleMatchMenu = () => {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<DifficultyLevel>('Medium');
   const [selectedTier, setSelectedTier] = useState<AbilityTier>('Village');
@@ -45,13 +43,16 @@ export const SingleMatchMenu = ({ returnToMainMenu, startMatch }: Props) => {
             option={tier}
             chooseOption={() => onTierSet(tier)}
             selected={selectedTier === tier}
+            disabled={!unlockedTiers.includes(tier)}
             key={index}
           />
         ))}
       </MenuList>
 
-      <button onClick={returnToMainMenu}>Back</button>
-      <NavLink to="teamDraft" end>
+      <NavLink to="/" end>
+        Back
+      </NavLink>
+      <NavLink to={singleMatchTeamDraftRoute} end>
         Start Game
       </NavLink>
     </>

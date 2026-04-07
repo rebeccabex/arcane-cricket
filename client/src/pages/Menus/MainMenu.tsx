@@ -1,25 +1,33 @@
 import styled from 'styled-components';
-import { Page } from '../../types';
+import { NavLink } from 'react-router-dom';
+import { singleMatchMenuRoute } from '../../routes';
 
-type Props = {
-  selectPage: (page: Page) => void;
-};
-
-export const MainMenu = ({ selectPage }: Props) => (
-  <>
+export const MainMenu = () => (
+  <Page>
     <Banner>
       <h1>Welcome to Arcane Cricket League</h1>
       <p>Where Cricket meets Magic!</p>
     </Banner>
     <Menu>
-      <MenuOption onClick={() => selectPage('SingleMatchMenu')}>
-        Single Match
+      <MenuOption to={singleMatchMenuRoute}>Single Match</MenuOption>
+      <MenuOption to="" disabled end>
+        Campaign
       </MenuOption>
-      <MenuOption disabled>Campaign</MenuOption>
-      <MenuOption disabled>Options</MenuOption>
+      <MenuOption to="" disabled end>
+        Options
+      </MenuOption>
     </Menu>
-  </>
+  </Page>
 );
+
+const Page = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+`;
 
 const Banner = styled.div`
   @media (max-width: 1024px) {
@@ -29,6 +37,8 @@ const Banner = styled.div`
 `;
 
 const Menu = styled.ul`
+  display: flex;
+  flex-direction: column;
   list-style-type: none;
 
   @media (max-width: 1024px) {
@@ -37,7 +47,7 @@ const Menu = styled.ul`
   }
 `;
 
-const MenuOption = styled.li<{ disabled?: boolean }>`
+const MenuOption = styled(NavLink)<{ disabled?: boolean }>`
   color: ${(props) => (props.disabled ? '#3e4043' : '#9ca3af')};
   cursor: ${(props) => (props.disabled ? 'auto' : 'pointer')};
 `;
