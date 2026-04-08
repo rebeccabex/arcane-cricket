@@ -79,4 +79,20 @@ database.exec(`
     FOREIGN KEY (ability_id)
       REFERENCES abilities (id)
   );
+
+  INSERT INTO categories (name)
+  VALUES
+    ('Player'),
+    ('Batter'),
+    ('Bowler'),
+    ('All rounder');
+
+  INSERT INTO classes (name, category_id, level)
+  VALUES
+    ('Villager', 1, 0),
+    ('Scrapper', 2, 1),
+    ('Caster', 3, 1),
+    ('Fighter', 2, 2),
+    ('Wilder', 4, 2),
+    ('Initiate', 3, 2);
 `);
