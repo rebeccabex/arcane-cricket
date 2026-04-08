@@ -19,7 +19,8 @@ app.get('/classes', (req, res) => {
 
 app.post('/generate-draft-players', jsonParser, (req, res) => {
   const level = req.body.difficultyLevel;
-  const availablePlayers = generatePlayers(level, db);
+  const tier = req.body.tier;
+  const availablePlayers = generatePlayers(level, tier, db);
 
   return res.json(availablePlayers);
 });

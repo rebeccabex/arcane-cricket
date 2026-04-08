@@ -12,7 +12,10 @@ export const TeamDraft = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getPlayersForDrafting(state.difficultyLevel);
+      const response = await getPlayersForDrafting(
+        state.difficultyLevel,
+        state.tier,
+      );
       setPlayersForDrafting(response.data);
     };
 
@@ -25,17 +28,21 @@ export const TeamDraft = () => {
       <DraftTable>
         <thead>
           <tr>
+            <th></th>
             <th>Name</th>
             <th>Level</th>
             <th>Class</th>
+            <th>Sel?</th>
           </tr>
         </thead>
         <tbody>
-          {playersForDrafting?.map((player) => (
-            <tr>
+          {playersForDrafting?.map((player, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
               <td>{`${player.forename} ${player.surname}`}</td>
               <td>{player.level}</td>
               <td>{player.class}</td>
+              <td></td>
             </tr>
           ))}
         </tbody>

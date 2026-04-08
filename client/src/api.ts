@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DifficultyLevel } from './pages/options';
+import { AbilityTier, DifficultyLevel } from './pages/options';
 
 const serverDomain = 'http://localhost:8080';
 const createURL = (path: string) => `${serverDomain}/${path}`;
@@ -9,10 +9,14 @@ export const getRequest = async (route: string) =>
 
 export const postRequest = async (
   route: string,
-  params: { difficultyLevel: DifficultyLevel },
+  params: { difficultyLevel: DifficultyLevel; tier: AbilityTier },
 ) => await axios.post(createURL(route), params).then((response) => response);
 
-export const getPlayersForDrafting = async (difficultyLevel: DifficultyLevel) =>
+export const getPlayersForDrafting = async (
+  difficultyLevel: DifficultyLevel,
+  tier: AbilityTier,
+) =>
   await postRequest('generate-draft-players', {
-    difficultyLevel: difficultyLevel,
+    difficultyLevel,
+    tier,
   });
