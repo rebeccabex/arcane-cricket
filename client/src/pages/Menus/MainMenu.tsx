@@ -50,4 +50,5 @@ const Menu = styled.ul`
 const MenuOption = styled(NavLink)<{ disabled?: boolean }>`
   color: ${(props) => (props.disabled ? '#3e4043' : '#9ca3af')};
   cursor: ${(props) => (props.disabled ? 'auto' : 'pointer')};
+  text-decoration: none;
 `;

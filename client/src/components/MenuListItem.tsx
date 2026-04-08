@@ -8,15 +8,19 @@ type Props = {
 };
 
 const MenuListItem = ({ option, selected, disabled, chooseOption }: Props) => (
-  <OptionContainer disabled={disabled} onClick={chooseOption}>
+  <OptionContainer
+    disabled={disabled}
+    onClick={chooseOption}
+    selected={selected}
+  >
     {option}
-    {selected ? ' Y ' : ''}
   </OptionContainer>
 );
 
-const OptionContainer = styled.li<{ disabled?: boolean }>`
+const OptionContainer = styled.li<{ disabled?: boolean; selected?: boolean }>`
   color: ${(props) => (props.disabled ? '#3e4043' : '#9ca3af')};
   cursor: ${(props) => (props.disabled ? 'auto' : 'pointer')};
+  font-weight: ${({ selected }) => selected && 800};
 `;
 
 export default MenuListItem;

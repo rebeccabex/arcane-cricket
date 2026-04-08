@@ -51,6 +51,6 @@ export const TeamDraft = () => {
   );
 };
 
-const Heading = styled.div``;
+const Heading = styled.h3``;
 
 const DraftTable = styled.table``;

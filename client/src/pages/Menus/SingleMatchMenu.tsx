@@ -7,8 +7,10 @@ import {
   DifficultyLevel,
   difficultyLevels,
 } from './../options.js';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { singleMatchTeamDraftRoute } from '../../routes.js';
+import styled from 'styled-components';
+import { Button } from '../../components/Button.js';
 
 const unlockedTiers: Array<AbilityTier> = ['Village'];
 
@@ -29,37 +31,76 @@ export const SingleMatchMenu = () => {
     });
   };
 
+  const handleClickBack = () => navigate('/');
+
+  const handleClickUseExistingTeam = () => {};
+
   return (
     <>
       <h3>Single Match</h3>
       <h5>Settings</h5>
-      <button disabled>Use existing team?</button>
-      <MenuList heading="Difficulty">
-        {difficultyLevels.map((level, index) => (
-          <MenuListItem
-            option={level}
-            chooseOption={() => onDifficultySet(level)}
-            selected={selectedDifficulty === level}
-            key={index}
-          />
-        ))}
-      </MenuList>
-      <MenuList heading="Level">
-        {abilityTiers.map((tier, index) => (
-          <MenuListItem
-            option={tier}
-            chooseOption={() => onTierSet(tier)}
-            selected={selectedTier === tier}
-            disabled={!unlockedTiers.includes(tier)}
-            key={index}
-          />
-        ))}
-      </MenuList>
+      <OptionsContainer>
+        <MenuContainer>
+          <MenuList heading="Difficulty">
+            {difficultyLevels.map((level, index) => (
+              <MenuListItem
+                option={level}
+                chooseOption={() => onDifficultySet(level)}
+                selected={selectedDifficulty === level}
+                key={index}
+              />
+            ))}
+          </MenuList>
+        </MenuContainer>
+        <MenuContainer>
+          <MenuList heading="Level">
+            {abilityTiers.map((tier, index) => (
+              <MenuListItem
+                option={tier}
+                chooseOption={() => onTierSet(tier)}
+                selected={selectedTier === tier}
+                disabled={!unlockedTiers.includes(tier)}
+                key={index}
+              />
+            ))}
+          </MenuList>
+        </MenuContainer>
+      </OptionsContainer>
 
-      <NavLink to="/" end>
-        Back
-      </NavLink>
-      <button onClick={handleClickStartGame}>Start Game</button>
+      <ButtonContainer>
+        <Button
+          label="Use existing team?"
+          onClick={handleClickUseExistingTeam}
+          disabled
+          size="Medium"
+        />
+        <Button
+          label="Back"
+          onClick={handleClickBack}
+          size="Medium"
+          role="link"
+        />
+        <Button
+          label="Start Game"
+          size="Medium"
+          onClick={handleClickStartGame}
+          role="link"
+        />
+      </ButtonContainer>
     </>
   );
 };
+
+const OptionsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const MenuContainer = styled.div``;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
