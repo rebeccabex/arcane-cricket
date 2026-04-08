@@ -49,7 +49,7 @@ const generateFirstName = () =>
 
 const generateSurname = () => chooseFromArray(names.player_names.surnames);
 
-app.get('/generate-draft-players', jsonParser, (req, res) => {
+app.post('/generate-draft-players', jsonParser, (req, res) => {
   const classes = db.prepare('SELECT * FROM classes').all();
 
   const playersPerLevel: { [string: DifficultyLevel]: number } = {
@@ -59,8 +59,9 @@ app.get('/generate-draft-players', jsonParser, (req, res) => {
     Expert: 5,
   };
 
-  const level = req.body as DifficultyLevel;
+  const level = req.body.difficultyLevel;
   const numberOfPlayersToGenerate = playersPerLevel[level];
+
   const availablePlayers = new Array<Player>();
   for (let i = 0; i < numberOfPlayersToGenerate; i++) {
     const newPlayer = {
