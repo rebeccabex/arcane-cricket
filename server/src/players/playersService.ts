@@ -71,7 +71,38 @@ const generateLevel = (tier: AbilityTier) =>
     ),
   );
 
-const generateStats = () => {}; // TODO
+const generateStats = () => {
+  const numberOfTwosRandom = Math.floor(Math.random() * 10);
+  const numberOfTwos =
+    numberOfTwosRandom === 0 ? 2 : numberOfTwosRandom <= 3 ? 0 : 1;
+
+  const numberOfMinusOnesRandom = Math.floor(Math.random() * 10);
+  const numberOfMinusOnes =
+    numberOfMinusOnesRandom === 0 ? 2 : numberOfMinusOnesRandom <= 3 ? 0 : 1;
+
+  const onesArray = [
+    [3, 3, 4],
+    [1, 2, 3],
+    [0, 1, 1],
+  ];
+  const meanNumberOfOnes = onesArray[numberOfTwos][numberOfMinusOnes];
+
+  const numberOfOnesRandom = Math.floor(Math.random() * 4);
+  let numberOfOnes =
+    numberOfOnesRandom === 0
+      ? meanNumberOfOnes + 1
+      : numberOfOnesRandom === 3
+        ? meanNumberOfOnes - 1
+        : 1;
+
+  if (numberOfOnes + numberOfTwos + numberOfMinusOnes > 6) {
+    numberOfOnes--;
+  }
+
+  const numberOfZereos = 6 - (numberOfTwos + numberOfOnes + numberOfMinusOnes);
+
+  // TODO - assign stats to abilities
+};
 const generateAbilityDice = () => {}; // TODO
 
 export const generatePlayers = (

@@ -20,6 +20,7 @@
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "knex": "^3.2.9",
     "sqlite3": "^6.0.1",
     "typescript": "^6.0.2"
   },

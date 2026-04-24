@@ -15,6 +15,9 @@ database.exec(`
     name TEXT NOT NULL,
     category_id INTEGER NOT NULL,
     level INTEGER NOT NULL,
+    stat_gain_option_1 TEXT,
+    stat_gain_option_2 TEXT,
+    stat_gain_option_3 TEXT,
     FOREIGN KEY (category_id)
       REFERENCES categories (id)
   );
@@ -80,19 +83,16 @@ database.exec(`
       REFERENCES abilities (id)
   );
 
-  INSERT INTO categories (name)
-  VALUES
-    ('Player'),
-    ('Batter'),
-    ('Bowler'),
-    ('All rounder');
-
-  INSERT INTO classes (name, category_id, level)
-  VALUES
-    ('Villager', 1, 0),
-    ('Scrapper', 2, 1),
-    ('Caster', 3, 1),
-    ('Fighter', 2, 2),
-    ('Wilder', 4, 2),
-    ('Initiate', 3, 2);
+  CREATE TABLE IF NOT EXISTS class_progressions(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    current_class_id INTEGER NOT NULL,
+    progression_class_1_id INTEGER NOT NULL,
+    progression_class_2_id INTEGER NOT NULL,
+    FOREIGN KEY (current_class_id)
+      REFERENCES classes (id),
+    FOREIGN KEY (progression_class_1_id)
+      REFERENCES classes (id),
+    FOREIGN KEY (progression_class_2_id)
+      REFERENCES classes (id)
+  );
 `);
