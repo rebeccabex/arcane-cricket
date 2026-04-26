@@ -26,6 +26,7 @@ export type Player = {
   surname: string;
   gender: Gender;
   level: number;
+  class: PlayerClass;
   experiencePoints: number;
   stats: PlayerStats;
   abilityDice: PlayerAbilityDice;
@@ -39,7 +40,7 @@ export type ClassCategory = {
 export type PlayerClass = {
   id: number;
   name: string;
-  category: string;
+  category: ClassCategory;
   level: number;
 };
 

@@ -7,10 +7,12 @@ import {
   namesFile,
   Player,
   PlayerClass,
+  stats,
 } from '../models/types.js';
 import {
   chooseFromArray,
   chooseFromArrayWithWeighting,
+  randomiseArray,
 } from '../helpers/randomHelpers.js';
 import { AbilityTier, DifficultyLevel } from '../types.js';
 import { parseJsonFile } from '../helpers/fileHelpers.js';
@@ -71,42 +73,52 @@ const generateLevel = (tier: AbilityTier) =>
     ),
   );
 
+const basicStatsArrays = [
+  [-1, -1, 0, 0, 1, 1],
+  [-1, -1, 0, 0, 1, 2],
+  [-1, 0, 0, 0, 1, 1],
+  [-1, -1, 0, 0, 2, 2],
+  [-1, 0, 0, 1, 1, 1],
+  [-1, -1, 0, 1, 2, 2],
+  [-1, 0, 0, 1, 1, 2],
+  [0, 0, 0, 1, 1, 1],
+  [-1, -1, 1, 1, 2, 2],
+  [0, 0, 0, 1, 1, 2],
+  [-1, 0, 1, 1, 2, 2],
+  [0, 0, 1, 1, 1, 2],
+  [0, 0, 1, 1, 2, 2],
+];
+
 const generateStats = () => {
-  const numberOfTwosRandom = Math.floor(Math.random() * 10);
-  const numberOfTwos =
-    numberOfTwosRandom === 0 ? 2 : numberOfTwosRandom <= 3 ? 0 : 1;
+  const statsValuesArray = chooseFromArray(basicStatsArrays);
 
-  const numberOfMinusOnesRandom = Math.floor(Math.random() * 10);
-  const numberOfMinusOnes =
-    numberOfMinusOnesRandom === 0 ? 2 : numberOfMinusOnesRandom <= 3 ? 0 : 1;
+  const randomisedStatsValuesArray = randomiseArray(statsValuesArray);
 
-  const onesArray = [
-    [3, 3, 4],
-    [1, 2, 3],
-    [0, 1, 1],
-  ];
-  const meanNumberOfOnes = onesArray[numberOfTwos][numberOfMinusOnes];
-
-  const numberOfOnesRandom = Math.floor(Math.random() * 4);
-  let numberOfOnes =
-    numberOfOnesRandom === 0
-      ? meanNumberOfOnes + 1
-      : numberOfOnesRandom === 3
-        ? meanNumberOfOnes - 1
-        : 1;
-
-  if (numberOfOnes + numberOfTwos + numberOfMinusOnes > 6) {
-    numberOfOnes--;
-  }
-
-  const numberOfZereos = 6 - (numberOfTwos + numberOfOnes + numberOfMinusOnes);
-
-  // TODO - assign stats to abilities
+  return Object.fromEntries(
+    stats.map((key, i) => [key, randomisedStatsValuesArray[i]]),
+  );
 };
+
 const generateAbilityDice = () => {}; // TODO
 
+const generatePlayer = (level: number) => {
+  const names = parseJsonFile<namesFile>(names_filename);
+
+  const gender = generateGender();
+
+  return {
+    forename: generateFirstName(gender, names),
+    surname: generateSurname(names),
+    level,
+    // class: TODO,
+    // experiencePoints: TODO,
+    stats: generateStats(),
+    // abilityDice: generateAbilityDice(),
+  } as Player;
+};
+
 export const generatePlayers = (
-  level: DifficultyLevel,
+  difficultyLevel: DifficultyLevel,
   tier: AbilityTier,
   db: Database,
 ) => {
@@ -115,20 +127,19 @@ export const generatePlayers = (
       'SELECT classes.id AS id, classes.name AS class, categories.name AS category, level FROM classes JOIN categories ON classes.category_id = categories.id',
     )
     .all() as Array<PlayerClass>;
-  const names = parseJsonFile<namesFile>(names_filename);
 
-  const numberOfPlayersToGenerate = playersPerLevel[level];
+  const numberOfPlayersToGenerate = playersPerLevel[difficultyLevel];
   const availablePlayers = new Array<Player>();
 
   for (let i = 0; i < numberOfPlayersToGenerate; i++) {
-    const gender = generateGender();
     const playerLevel = generateLevel(tier);
 
-    const newPlayer = {
-      forename: generateFirstName(gender, names),
-      surname: generateSurname(names),
-      level: playerLevel,
-    } as Player;
+    const newPlayer = generatePlayer(playerLevel);
+    availablePlayers.push(newPlayer);
+  }
+
+  for (let i = numberOfPlayersToGenerate; i < 20; i++) {
+    const newPlayer = generatePlayer(0);
     availablePlayers.push(newPlayer);
   }
 
